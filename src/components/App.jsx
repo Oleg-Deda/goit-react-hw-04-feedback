@@ -10,51 +10,35 @@ const Titles = {
   statistics: 'Statistics',
 };
 
-function App () {
+export const App = () => {
  const [good, setGood] = useState(0);
  const [neutral, setNeutral] = useState(0);
  const [bad, setBad] = useState(0);
  
-const feedbackHandler = ({target}) => {
-  switch (target.textContent){
+const feedbackHandler = evt => {
+  switch (evt.target.textContent){
     case 'good':
-    return setGood(prevState => prevState +1)
+   setGood(prevState => prevState +1);
+    break;
     case 'neutral':
-    return setNeutral(prevState => prevState +1)
+    setNeutral(prevState => prevState +1);
+    break;
     case 'bad':
-    return setBad(prevState => prevState +1)  
-
-    default: return 
+    setBad(prevState => prevState +1)  
+    break;
+    default: 
+    break;
   }
-}
+};
 
-const totalFeedback = () => {
-  return good + neutral + bad
-  }
+const total =  good + neutral + bad;
+  
+  const positiveFeedback  = ((good / total) * 100).toFixed(2);
 
-  const positiveFeedback = () => {
-    return (good * 100 ) / totalFeedback;
-  }
 
   return(
 
-// feedbackHandler = evt =>  {
-//   this.setState(prevState => {
-//     return {
-//       [evt.target.textContent]: prevState[evt.target.textContent] + 1,
-//     };
-//   });
-// };
 
-// countTotalFeedback = state =>
-//     Object.values(state).reduce((acc, value) => acc + value, 0);
-
-//     countPositiveFeedbackPercentage = ({ good }) =>
-//     ((good / this.countTotalFeedback(this.state)) * 100).toFixed(2);
-
-  // render() {
-  //   const { good, neutral, bad } = this.state;
-    // return (
       <>
         <SectionTitle title={Titles.feedback}>
           <FeedbackOptions
@@ -63,13 +47,13 @@ const totalFeedback = () => {
           />
         </SectionTitle>
         <SectionTitle title={Titles.statistics}>
-        {totalFeedback() > 0 ? (
+        {total  ? (
             <Statistics
               good={good}
               neutral={neutral}
               bad={bad}
-              total={totalFeedback()}
-              positive={positiveFeedback()}
+              total={total}
+              positiveFeedback ={positiveFeedback }
                            
             />
           ) : (
@@ -79,4 +63,4 @@ const totalFeedback = () => {
       </>
     );
   }
-  export default App;
+  
